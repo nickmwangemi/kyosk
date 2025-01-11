@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kyosk-deployment
+  labels:
+    app: kyosk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kyosk
+  template:
+    metadata:
+      labels:
+        app: kyosk
+    spec:
+      containers:
+        - name: kyosk-container
+          image: nickmwangemi/kyosk:latest  # Replace with your image
+          ports:
+            - containerPort: 8080
