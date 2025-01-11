@@ -38,8 +38,4 @@ public class BookController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/health")
-    public String health() {
-        return "Up and running!";
-    }
 }
