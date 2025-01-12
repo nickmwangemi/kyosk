@@ -6,12 +6,14 @@ COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
 
+RUN apt-get update && apt-get install -y curl
 RUN chmod +x ./mvnw
 RUN ./mvnw install -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 FROM eclipse-temurin:17-jre-focal
 VOLUME /tmp
+RUN apt-get update && apt-get install -y curl
 ARG DEPENDENCY=/workspace/app/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
