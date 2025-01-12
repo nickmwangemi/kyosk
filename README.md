@@ -39,10 +39,8 @@
    docker compose down -v
    ```
 
-5. Access the application:
-   ```
-   http://localhost:8080
-   ```
+5. Access the application at http://localhost:8080
+
 
 ### Docker Commands for Troubleshooting
 1. List running containers:
