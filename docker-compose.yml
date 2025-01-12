@@ -1,21 +1,65 @@
+version: "3.8"
+
 services:
   app:
     build: .
+    container_name: bookstore-app
     ports:
       - "8080:8080"
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     environment:
       - SPRING_DATA_MONGODB_HOST=mongodb
       - SPRING_DATA_MONGODB_PORT=27017
       - SPRING_DATA_MONGODB_DATABASE=bookstore
+      - JAVA_OPTS=-Xmx256m -Xms128m
+    networks:
+      - bookstore-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
 
   mongodb:
     image: mongo:latest
+    container_name: bookstore-mongodb
     ports:
       - "27018:27017"
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - bookstore-network
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=admin
+      - MONGODB_INITDB_ROOT_PASSWORD=password
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+
+networks:
+  bookstore-network:
+    driver: bridge
 
 volumes:
   mongodb_data:
+    name: bookstore-mongodb-data
