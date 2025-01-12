@@ -3,27 +3,71 @@
 ## Steps to Build and Run the Application Locally Using Docker
 
 ### Prerequisites
-1. Install [Docker](https://docs.docker.com/get-docker/).
+1. Install Docker and Docker Compose.
 2. Clone this repository:
    ```bash
    git clone git@github.com:nickmwangemi/kyosk.git
    cd kyosk
    ```
 
-### Build the Docker Image
-1. Build the Docker image:
+### Using Docker Compose (Recommended)
+1. Start the application and MongoDB:
    ```bash
-   docker build -t nickmwangemi/kyosk-app:latest .
+   docker compose up -d
    ```
 
-### Run the Docker Container
-1. Start the container:
+2. Check if services are running:
    ```bash
-   docker run -p 8080:8080 nickmwangemi/kyosk-app:latest
+   docker compose ps
    ```
-2. Access the application in your browser or via curl at:
+
+3. View logs:
+   ```bash
+   # All services
+   docker compose logs
+
+   # Specific service
+   docker compose logs app
+   docker compose logs mongodb
+   ```
+
+4. Stop the services:
+   ```bash
+   docker compose down
+
+   # To also remove volumes
+   docker compose down -v
+   ```
+
+5. Access the application:
    ```
    http://localhost:8080
+   ```
+
+### Docker Commands for Troubleshooting
+1. List running containers:
+   ```bash
+   docker ps
+   ```
+
+2. Check container logs:
+   ```bash
+   docker logs [container_id]
+   ```
+
+3. Access container shell:
+   ```bash
+   docker exec -it [container_id] bash
+   ```
+
+4. Check MongoDB connection:
+   ```bash
+   docker compose exec mongodb mongosh --eval "db.adminCommand('ping')"
+   ```
+
+5. Check application health:
+   ```bash
+   curl http://localhost:8080/actuator/health
    ```
 
 ---
