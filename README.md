@@ -147,7 +147,6 @@ The GitHub Actions workflow automates the process of building, testing, and depl
 ## Decisions, Assumptions, and Challenges Faced
 
 ### Decisions
-- Used `NodePort` service type in Kubernetes for local access via Minikube.
 - Opted for Docker Hub as the default image registry (can be switched to GitHub Container Registry).
 - Chose `GitHub Actions` for CI/CD due to its seamless integration with the repository.
 
@@ -157,6 +156,5 @@ The GitHub Actions workflow automates the process of building, testing, and depl
 
 ### Challenges
 - Handling cross-environment compatibility for Minikube’s Docker daemon.
-- Ensuring the NodePort range (default: 30000-32767) was accessible on the local machine.
 - Managing Kubernetes manifests to balance simplicity and extensibility for scaling.
 
