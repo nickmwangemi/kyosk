@@ -27,8 +27,8 @@
    docker compose logs
 
    # Specific service
-   docker compose logs app
-   docker compose logs mongodb
+   docker compose logs bookstore-app
+   docker compose logs bookstore-mongodb
    ```
 
 4. Stop the services:
@@ -82,11 +82,21 @@
    ```bash
    minikube start
    ```
-2. Use Minikube’s Docker daemon:
+2. Point your Docker environment to Minikube’s Docker daemon:
    ```bash
    eval $(minikube docker-env)
    ```
-3. Build the Docker image inside Minikube:
+3. Re-eval your docker-env to ensure your environment variables have updated ports:
+   ```bash
+   minikube -p minikube docker-env
+   ```
+
+4. Point your shell to minikube's docker-daemon:
+   ```bash
+   eval $(minikube -p minikube docker-env)
+   ```
+
+5. Build the Docker image inside Minikube:
    ```bash
    docker build -t kyosk-app:latest .
    ```
@@ -94,18 +104,23 @@
 ### Deploy the Application
 1. Apply the Kubernetes manifests:
    ```bash
-   kubectl apply -f deployment.yaml
-   kubectl apply -f service.yaml
+   kubectl apply -f k8s/
+   ```
+2. Verify the deployment:
+   ```bash
+   # Check deployment status
+   kubectl get deployments
+   kubectl get pods
+   
+   # Check service status
+   kubectl get services
    ```
 
+
 ### Access the Application
-1. Get the Minikube IP:
+1. Run:
    ```bash
-   minikube ip
-   ```
-2. Access the application via the NodePort (e.g., `30007`):
-   ```bash
-   curl http://<minikube-ip>:30007
+   minikube service sample-app-service
    ```
 
 ---
