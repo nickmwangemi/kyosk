@@ -120,7 +120,7 @@
 ### Access the Application
 1. Run:
    ```bash
-   minikube service sample-app-service
+   minikube service spring-boot-service
    ```
 
 ---
