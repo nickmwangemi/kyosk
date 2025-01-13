@@ -122,6 +122,9 @@
    ```bash
    minikube service spring-boot-service
    ```
+   
+![img.png](img.png)
+
 
 ---
 
