@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-boot-configmap
+data:
+  SPRING_DATA_MONGODB_HOST: "mongodb-service"
+  SPRING_DATA_MONGODB_DATABASE: "springapp"
+
